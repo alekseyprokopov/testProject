@@ -13,7 +13,7 @@ import (
 )
 
 type Server struct {
-	gin     *gin.Engine
+	router  *gin.Engine
 	storage *storage.Storage
 
 	httpClient *http.Client
@@ -30,7 +30,7 @@ func New() (*Server, error) {
 	}
 
 	return &Server{
-		gin:        gin.Default(),
+		router:     gin.Default(),
 		storage:    store,
 		httpClient: &http.Client{},
 	}, nil
@@ -38,9 +38,10 @@ func New() (*Server, error) {
 }
 
 func (s *Server) Start() error {
-	s.gin.GET("/saveData", s.saveDataHandler)
+	s.storage.Init()
+	s.router.GET("/saveData", s.saveDataHandler)
 
-	return s.gin.Run()
+	return s.router.Run()
 }
 
 func (s *Server) saveDataHandler(c *gin.Context) {

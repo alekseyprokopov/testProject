@@ -11,5 +11,6 @@ func main() {
 	if err != nil {
 		log.Fatal(fmt.Errorf("can't create apiserver: %w", err))
 	}
+
 	s.Start()
 }

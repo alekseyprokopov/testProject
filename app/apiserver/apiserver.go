@@ -39,7 +39,7 @@ func New() (*Server, error) {
 
 func (s *Server) Start() error {
 	s.storage.Init()
-	s.router.GET("/saveData", s.saveDataHandler)
+	s.router.POST("/saveData", s.saveDataHandler)
 
 	return s.router.Run()
 }

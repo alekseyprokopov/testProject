@@ -4,7 +4,9 @@
 
 ###### При первом запуске, создаются две таблицы, person и location, имеющие связь через foreign key
 ###### Взаимодействие с https://randomuser.me/api/ происходит при использовании эндпоинта /saveData и метода POST (по умолчанию порт :8080)
-> curl POST localhost:8080/saveData
+> curl -X POST localhost:8080/saveData
+
+![image](https://user-images.githubusercontent.com/124125256/231507578-4a7a58de-9683-4fac-ae41-8d695dc0a3ca.png)
 
 ### Результат добавления данных в таблицу person
 ![image](https://user-images.githubusercontent.com/124125256/231498186-f3839079-09ab-4f75-9086-e60311a8d79f.png)

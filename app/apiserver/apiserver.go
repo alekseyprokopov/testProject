@@ -58,6 +58,7 @@ func (s *Server) saveDataHandler(c *gin.Context) {
 	for _, item := range resp.Results {
 		s.storage.Save(&item)
 	}
+	c.IndentedJSON(http.StatusOK, "items saved")
 }
 
 func (s *Server) doRequest(url string) ([]byte, error) {

@@ -38,19 +38,20 @@ func (s *Storage) Save(user *response.UserData) error {
 }
 
 func (s *Storage) savePerson(user *response.UserData) (int64, error) {
+	var lastId int64 = 0
 	q := `INSERT INTO person(gender, title_name, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING id`
 
-	result, err := s.db.Exec(q, user.Gender, user.Name.Title, user.Name.First, user.Name.Last)
-	if err != nil {
+	//result, err := s.db.Exec(q, user.Gender, user.Name.Title, user.Name.First, user.Name.Last)
+	if err := s.db.QueryRow(q, user.Gender, user.Name.Title, user.Name.First, user.Name.Last).Scan(&lastId); err != nil {
 		return 0, fmt.Errorf("can't insert data in person table: %w", err)
 	}
 
-	return result.RowsAffected()
+	return lastId, nil
 }
 func (s *Storage) saveLocation(user *response.UserData, personId int64) error {
+
 	q := `INSERT INTO location(street_number,street_name,city,country,postcode,coordinates_latitude,coordinates_longitude, person_id)
 		 VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`
-	log.Printf("USER:%+v", user)
 	_, err := s.db.Exec(
 		q,
 		user.Location.Street.Number,
